@@ -4,13 +4,13 @@ function syncValues(inpToId,inpFrom){
 }
 window.onload=function(){	
 	syncValues('range');
-	var makeDecition = (function (){
-		var tm2, tm_rest, activateButton=function(){
+	var callReminder = (function (){
+		var tm, tm_rest, activateButton=function(){
             document.getElementById('start').disabled=false;
         };
 		return function(command){
 			if(command===true){
-				clearTimeout(tm2);
+				clearTimeout(tm);
                 activateButton();
 			}else{
                 var min=document.getElementById('intrvl').value;
@@ -30,24 +30,24 @@ window.onload=function(){
                         var dt=document.getElementById('stats');
                         var content = dt.innerHTML;
                         dt.innerHTML='<div>'+ntm.toLocaleString()+'</div>'+content;
-                        clearInterval(tm2);
-                        if(confirm("Продолжить?")) makeDecition();
+                        clearInterval(tm);
+                        if(confirm("Продолжить?")) callReminder();
                         else activateButton();
                     }
                     tm_rest-=1;
                 };
                 showTime();
-                tm2=setInterval(showTime,1000);
+                tm=setInterval(showTime,1000);
 			}
 		};
 	}());
 	document.getElementById('start').onclick=function(event){
-		makeDecition();
+		callReminder();
 		event.currentTarget.disabled=true;
 	};
 	document.getElementById('stop').onclick=function(event){		
-		makeDecition(true);
+		callReminder(true);
 	};
-	document.getElementById('intrvl').onfocus=function(){makeDecition(true);};
-	document.getElementById('range').onfocus=function(){makeDecition(true);};
+	document.getElementById('intrvl').onfocus=function(){callReminder(true);};
+	document.getElementById('range').onfocus=function(){callReminder(true);};
 };
