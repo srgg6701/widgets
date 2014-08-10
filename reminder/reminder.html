@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Reminder</title>
+<link href="style.css" rel="stylesheet" />
+</head>
+<body>
+<h3>Укажите интервал:</h3>
+<div id="controls">
+    <input type="range" id="range" min="1" max="480" onInput="syncValues('intrvl',this);" />
+    <input type="text" id="intrvl" value="7" onInput="syncValues('range',this);" /> минут.
+</div>
+<div id="buttons">
+	<button id="start">Старт</button> &nbsp; 
+    <button id="stop">Стоп</button>
+</div>  
+<div id="stats"></div>  
+<script src="script.js"></script>
+</body>
+</html>
