@@ -24,7 +24,6 @@ h3{
 #buttons{
 	float:left;
 	clear:left;
-	padding-top: 10px;
 }
 #controls{
 	padding:10px;
@@ -46,10 +45,17 @@ h3{
 	margin: 7px 10px 7px auto;
 	width:200px;
 }
+#rest_box{
+    display: table;
+    padding: 10px;
+}
 #stats{
 	padding:10px;
 	background-color: aliceblue;
 	float: left;
 	clear: left;
 	margin-top: 8px;
+}
+#tmrest{
+    display: inline-block;
 }
