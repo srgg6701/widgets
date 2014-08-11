@@ -7,22 +7,23 @@ function syncValues(inpToId,inpFrom){
 }
 window.onload=function(){	
 	syncValues('range');
-	var callReminder = (function (){
+	var tm, callReminder = (function (){
 		var activateButton=function(){
                 document.getElementById('start').disabled=false;
             },
             innerBar=document.querySelector('#rest-bar >div');
 		return function(command){
+
 			if(command===true){
 				clearTimeout(tm);
                 activateButton();
 			}else{
                 var min=document.getElementById('intrvl').value;
-                var tm,tmcount,
+                var tmcount,
                     tm_rest=min*60,
                     time_start=tm_rest,
                     tm_rest_fixed=(tm_rest/60).toFixed(0),
-                    timeBox = document.getElementById('tmrest'),
+                    timeRestBox = getTimeGoneBox(),
                     info,
                     percentage;
                 var showTime=function(){
@@ -40,7 +41,7 @@ window.onload=function(){
                         info=tm_rest;
                     }
                     info+=' сек.';
-                    timeBox.innerHTML=info;
+                    timeRestBox.innerHTML=info;
                     percentage = tm_rest/(min*60)*100;
                     innerBar.style.width=percentage+'%';
                     if(tm_rest==0){
@@ -69,7 +70,6 @@ window.onload=function(){
 	document.getElementById('intrvl').onfocus=function(){callReminder(true);};
 	document.getElementById('range').onfocus=function(){callReminder(true);};
     var pointers=document.querySelectorAll('#time_less, #time_more');
-    console.dir(pointers);
     for(var i in pointers){
         if(pointers[i].hasOwnProperty('innerHTML')) //console.dir(pointers[i]);
             pointers[i].addEventListener('click', function(event) {
@@ -82,4 +82,22 @@ window.onload=function(){
             });
     }
     document.getElementById('controls').onselectstart=function(){return false;};
+    document.getElementById('clear-time').onclick=clear;
+
+    function initTimeGoneBox(){
+        getTimeGoneBox().innerHTML='0';
+    }
+
+    initTimeGoneBox();
+
+    function clear(){
+        callReminder(true);
+        getTimeCell().value='0';
+        initTimeGoneBox();
+        syncValues('range');
+    }
+
+    function getTimeGoneBox(){
+        return document.getElementById('tmrest');
+    }
 };

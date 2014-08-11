@@ -27,6 +27,10 @@ h3{
 	float:left;
 	clear:left;
 }
+#clear-time{
+    float: right;
+    margin-bottom: -100%;
+}
 #controls{
 	padding:10px;
 	display: table;
