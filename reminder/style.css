@@ -43,13 +43,13 @@ h3{
 #range{
 	float:left;
 	margin: 7px 10px 7px auto;
-	width:200px;
+	width: 202px;
 }
 #rest-bar{
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
     height: 26px;
-    width: 100%;
+    width: 34%;
     background-color: aliceblue;
     overflow: hidden;
 }
@@ -79,6 +79,16 @@ h3{
 	float: left;
 	clear: left;
 	margin-top: 8px;
+}
+#time_less,
+#time_more{
+    cursor: default;
+    opacity: 0.4;
+    padding: 2px 3px;
+}
+#time_less:hover,
+#time_more:hover{
+    opacity: 1;
 }
 #tmrest{
     padding-left: 4px;
