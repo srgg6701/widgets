@@ -1,3 +1,6 @@
+body{
+    font-family:"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+}
 button{
 	border-radius: 6px;	
 	border: none;
@@ -11,7 +14,6 @@ button:nth-child(2){
 	background-color:pink;
 }
 h3{
-	font-family:"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
 	display: table;
 	background: url(images/clock.png) no-repeat 0 3px;
 	background-size: 40px;
@@ -83,6 +85,7 @@ h3{
 #time_less,
 #time_more{
     cursor: default;
+    font-family: "Times New Roman", Cambria;
     opacity: 0.4;
     padding: 2px 3px;
 }
