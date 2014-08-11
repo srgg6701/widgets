@@ -5,9 +5,11 @@ function syncValues(inpToId,inpFrom){
 window.onload=function(){	
 	syncValues('range');
 	var callReminder = (function (){
-		var tm, tm_rest, activateButton=function(){
-            document.getElementById('start').disabled=false;
-        };
+		var tm, tm_rest,
+            activateButton=function(){
+                document.getElementById('start').disabled=false;
+            },
+            innerBar=document.querySelector('#rest-bar >div');
 		return function(command){
 			if(command===true){
 				clearTimeout(tm);
@@ -16,7 +18,7 @@ window.onload=function(){
                 var min=document.getElementById('intrvl').value;
                 tm_rest=min*60;
                 var showTime=function(){
-                    var info;
+                    var info, percentage;
                     if(tm_rest>=60){
                         info=((tm_rest/60).toFixed(0)-1) + ' мин. '
                             + (tm_rest%60);
@@ -25,6 +27,8 @@ window.onload=function(){
                     }
                     info+=' сек.';
                     document.getElementById('tmrest').innerHTML=info;
+                    percentage = tm_rest/(min*60)*100;
+                    innerBar.style.width=percentage+'%';
                     if(tm_rest==0){
                         var ntm=new Date();
                         var dt=document.getElementById('stats');
