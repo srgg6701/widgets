@@ -21,7 +21,7 @@ window.onload = function () {
         },
         timeCell = getTimeCell();
     // синхронизировать значение интервала между ячейкой и ползунком
-    syncValues('intrvl');
+    syncValues(controls().intrvl);
     // инициализировать значение интервала нулём
     initTimeGoneBox();
     var tm,
@@ -105,7 +105,7 @@ window.onload = function () {
                     if (element.id == 'time_more'){
                         if(!timeCell.disabled) timeCell.value++;
                     }
-                    syncValues('intrvl');
+                    syncValues(controls().intrvl);
                 });
         }
     }(callReminder));
@@ -134,7 +134,7 @@ window.onload = function () {
     // Синхронизировать значения:
     // - Ячейка со значением интервала
     document.getElementById('intrvl').oninput = function () {
-        syncValues('intrvl');
+        syncValues(controls().intrvl);
     };
     // - Ползунок с интервалом
     document.getElementById('range').oninput = function () {
@@ -158,7 +158,7 @@ window.onload = function () {
         callReminder(true);
         getTimeCell().value = '0';
         initTimeGoneBox();
-        syncValues('intrvl');
+        syncValues(controls().intrvl);
     }
     // получить элемент для отображения остатка времени
     function getTimeGoneBox() {
