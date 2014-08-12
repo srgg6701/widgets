@@ -1,12 +1,12 @@
 function getTimeCell() {
     return document.getElementById('intrvl');
 }
-function syncValues(inpToId, inpFrom) {
-    if (!inpFrom) inpFrom = getTimeCell();
-    document.getElementById(inpToId).value = inpFrom.value;
+function syncValues(inpToId) {
+    if(!inpToId) inpToId='range';
+    document.getElementById(inpToId).value = getTimeCell().value;
 }
 window.onload = function () {
-    syncValues('range');
+    syncValues();
     var controls={range:'range',intrvl:'intrvl',start:'start'},
         tm,
     callReminder = (function () {
@@ -66,7 +66,7 @@ window.onload = function () {
     timeCell.onblur = function(){
         timeCell.value=timeCell.value.replace(',','.');
         timeCell.value=timeCell.value.replace(/\s/g,'');
-        syncValues('range');
+        syncValues();
     };
     document.getElementById('start').onclick = function (event) {
         if(!timeCell.value||timeCell.value=='0'){
@@ -100,7 +100,7 @@ window.onload = function () {
                 if (element.id == 'time_more'){
                     if(!timeCell.disabled) timeCell.value++;
                 }
-                syncValues('range');
+                syncValues();
             });
     }
     document.getElementById('controls').onselectstart = function () {
@@ -118,7 +118,7 @@ window.onload = function () {
         callReminder(true);
         getTimeCell().value = '0';
         initTimeGoneBox();
-        syncValues('range');
+        syncValues();
     }
 
     function getTimeGoneBox() {

@@ -9,9 +9,9 @@
 <h3>Укажите интервал:</h3>
 <div id="rnd">
     <div id="controls">
-        <input type="range" id="range" min="1" max="480" onInput="syncValues('intrvl',this);" />
+        <input type="range" id="range" min="1" max="480" onInput="syncValues('intrvl');" />
         <span id="time_less">◄</span>
-        <input type="text" id="intrvl" value="7" onInput="syncValues('range',this);" />
+        <input type="text" id="intrvl" value="7" onInput="syncValues();" />
         <span id="time_more">►</span>
         минут
     </div>
