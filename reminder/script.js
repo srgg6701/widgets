@@ -66,6 +66,7 @@ window.onload = function () {
     timeCell.onblur = function(){
         timeCell.value=timeCell.value.replace(',','.');
         timeCell.value=timeCell.value.replace(/\s/g,'');
+        syncValues('range');
     };
     document.getElementById('start').onclick = function (event) {
         if(!timeCell.value||timeCell.value=='0'){
