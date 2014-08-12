@@ -1,27 +1,29 @@
 window.onload = function () {
     var controls=function(){
             return{
-                range:  'range',    // ползунок
-                intrvl: 'intrvl',   // ячейка
-                start:  'start'     // кнопка
+                range:      'range',    // ползунок
+                interval:   'interval', // ячейка
+                start:      'start'     // кнопка
             }
         },
-        // вернуть либо ячейку со значением интервала, либо само значение
-        getTimeCell = function(value) {
-            var cell=document.getElementById(controls().intrvl);
-            return (value)? cell.value:cell;
-        },
+        cellRange    = document.getElementById(controls().range),
+        cellInterval = document.getElementById(controls().interval),
         // синхронизировать значение интервала между ячейкой и ползунком
         syncValues = function(inpToId) {
-            if(!inpToId) inpToId='range';
-            if(inpToId==='range')
-                getTimeCell().value=document.getElementById(inpToId).value;
+            if(inpToId===controls().range)
+                cellInterval.value = cellRange.value;
             else
-                document.getElementById('range').value = getTimeCell(true);
+                cellRange.value = cellInterval.value;
         },
-        timeCell = getTimeCell();
+        // остановить и очистить всё
+        clear = function () {
+            callReminder(true);
+            cellInterval.value = '0';
+            initTimeGoneBox();
+            syncValues(controls().interval);
+        };
     // синхронизировать значение интервала между ячейкой и ползунком
-    syncValues(controls().intrvl);
+    syncValues(controls().interval);
     // инициализировать значение интервала нулём
     initTimeGoneBox();
     var tm,
@@ -39,7 +41,7 @@ window.onload = function () {
                 clearTimeout(tm); //console.log('21: clear interval');
                 manageControls(); // разморозить элементы управления
             } else {
-                var min = getTimeCell(true);
+                var min = cellInterval.value;
                 manageControls(true); // зaморозить элементы управления
                 var time_rest_in_seconds_init = min * 60,
                     time_rest_in_seconds = time_rest_in_seconds_init,    // инициализация значения, далее будет уменьшаться
@@ -87,7 +89,7 @@ window.onload = function () {
          назначить вызов callReminder(остановка_выполнения) по событиям:
          - явная установка
          - изменение значения интервала */
-        var btns=['stop',controls().intrvl,controls().range];
+        var btns=['stop',controls().interval,controls().range];
         for(var i in btns)
             document.getElementById(btns[i]).onclick = function () {
                 callback(true);
@@ -98,14 +100,13 @@ window.onload = function () {
             if (pointers[i].hasOwnProperty('innerHTML')) //console.dir(pointers[i]);
                 pointers[i].addEventListener('click', function (event) {
                     var element = event.currentTarget;
-                    var timeCell = getTimeCell();
-                    if (element.id == 'time_less' && timeCell.value > 0){
-                        if(!timeCell.disabled) timeCell.value--;
+                    if (element.id == 'time_less' && cellInterval.value > 0){
+                        if(!cellInterval.disabled) cellInterval.value--;
                     }
                     if (element.id == 'time_more'){
-                        if(!timeCell.disabled) timeCell.value++;
+                        if(!cellInterval.disabled) cellInterval.value++;
                     }
-                    syncValues(controls().intrvl);
+                    syncValues(controls().interval);
                 });
         }
     }(callReminder));
@@ -113,17 +114,17 @@ window.onload = function () {
      ОБРАБОТАТЬ СОБЫТИЯ ЭЛЕМЕНТОВ
      */
     // обработать значение интервала в ячейке
-    timeCell.onblur = function(){
-        timeCell.value=timeCell.value.replace(',','.');
-        timeCell.value=timeCell.value.replace(/\s/g,'');
-        syncValues();
+    cellInterval.onblur = function(){
+        cellInterval.value=cellInterval.value.replace(',','.');
+        cellInterval.value=cellInterval.value.replace(/\s/g,'');
+        syncValues(controls().range);
     };
     // Кнопка "Старт"
     document.getElementById('start').onclick = function (event) {
-        if(!timeCell.value||timeCell.value=='0'){
+        if(!cellInterval.value||cellInterval.value=='0'){
             alert('Укажите интервал');
         }else{
-            if(/[^0-9\.]/.test(timeCell.value)){
+            if(/[^0-9\.]/.test(cellInterval.value)){
                 alert('Недопустимые символы в поле для интервала');
             }else{
                 callReminder();
@@ -133,12 +134,12 @@ window.onload = function () {
     };
     // Синхронизировать значения:
     // - Ячейка со значением интервала
-    document.getElementById('intrvl').oninput = function () {
-        syncValues(controls().intrvl);
+    cellInterval.oninput = function () {
+        syncValues(controls().interval);
     };
     // - Ползунок с интервалом
-    document.getElementById('range').oninput = function () {
-        syncValues();
+    cellRange.oninput = function () {
+        syncValues(controls().range);
     };
     // Блокоировать выделение на блоке с элементами управления
     document.getElementById('controls').onselectstart = function () {
@@ -152,13 +153,6 @@ window.onload = function () {
     // инициализировать значение интервала
     function initTimeGoneBox() {
         getTimeGoneBox().innerHTML = '0';
-    }
-    // остановить и очистить всё
-    function clear() {
-        callReminder(true);
-        getTimeCell().value = '0';
-        initTimeGoneBox();
-        syncValues(controls().intrvl);
     }
     // получить элемент для отображения остатка времени
     function getTimeGoneBox() {
