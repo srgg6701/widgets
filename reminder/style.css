@@ -1,3 +1,4 @@
+/*    tags  */
 body{
     font-family:"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
 }
@@ -14,22 +15,25 @@ button:nth-child(2){
 	background-color:pink;
 }
 h3{
-	display: table;
-	background: url(images/clock.png) no-repeat 0 3px;
-	background-size: 40px;
-	height: 46px;
-	line-height: 46px;
-	margin: 0;
-	margin-bottom: 4px;
-	padding-left: 52px;
+    display: table;
+    background: url(images/clock.png) no-repeat 0 3px;
+    background-size: 40px;
+    height: 46px;
+    line-height: 46px;
+    margin: 0;
+    margin-bottom: 4px;
+    padding-left: 52px;
 }
+/*  ids    */
 #buttons{
 	float:left;
 	clear:left;
 }
 #clear-time{
+    bottom: -35px;
     float: right;
-    margin-bottom: -100%;
+    position: absolute;
+    right: 4px;
 }
 #controls{
 	padding:10px;
@@ -78,6 +82,7 @@ h3{
 }
 #rnd{
     display: table;
+    position: relative;
 }
 #stats{
 	padding:10px;

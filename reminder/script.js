@@ -13,47 +13,38 @@ window.onload=function(){
             },
             innerBar=document.querySelector('#rest-bar >div');
 		return function(command){
-
 			if(command===true){
 				clearTimeout(tm);
                 activateButton();
 			}else{
                 var min=document.getElementById('intrvl').value;
-                var tmcount,
-                    tm_rest=min*60,
-                    time_start=tm_rest,
-                    tm_rest_fixed=(tm_rest/60).toFixed(0),
+                var time_rest_in_seconds_init=min*60,
+                    time_rest_in_seconds=time_rest_in_seconds_init,    // инициализация значения, далее будет уменьшаться
                     timeRestBox = getTimeGoneBox(),
-                    info,
-                    percentage;
+                    timeRestInfo;
                 var showTime=function(){
-                    // если первый запуск
-                    if(time_start){
-                        tmcount=tm_rest_fixed; // отобразить первое значение, как установочное
-                        time_start=null; // удалить метку начала
+                    // скорректировать ширину прогресс-бара
+                    innerBar.style.width=(time_rest_in_seconds/time_rest_in_seconds_init*100)+'%';
+                    // если не меньше минуты, покажем их
+                    if(time_rest_in_seconds>=60){
+                        timeRestInfo = Math.floor(time_rest_in_seconds/60) + ' мин. ' + (time_rest_in_seconds%60);
                     }else{
-                        tmcount=tm_rest_fixed-1;
+                        timeRestInfo=time_rest_in_seconds;
                     }
-                    if(tm_rest>=60){
-                        info=tmcount + ' мин. '
-                            + (tm_rest%60);
-                    }else{
-                        info=tm_rest;
-                    }
-                    info+=' сек.';
-                    timeRestBox.innerHTML=info;
-                    percentage = tm_rest/(min*60)*100;
-                    innerBar.style.width=percentage+'%';
-                    if(tm_rest==0){
-                        var ntm=new Date();
-                        var dt=document.getElementById('stats');
-                        var content = dt.innerHTML;
-                        dt.innerHTML='<div>'+ntm.toLocaleString()+'</div>'+content;
+                    timeRestInfo+=' сек.';
+                    // отобразить запись остатка времени
+                    timeRestBox.innerHTML=timeRestInfo;
+                    //console.log('timeRestInfo: '+timeRestInfo+', rest: '+(time_rest_in_seconds/time_rest_in_seconds_init*100)+'%, seconds: '+time_rest_in_seconds);
+                    if(time_rest_in_seconds==0){
+                        var ntm=new Date(),
+                            reminder_history=document.getElementById('stats'),
+                            content = reminder_history.innerHTML;
+                        reminder_history.innerHTML='<div>'+ntm.toLocaleString()+'</div>'+content;
                         clearInterval(tm);
                         if(confirm("Продолжить?")) callReminder();
                         else activateButton();
                     }
-                    tm_rest-=1;
+                    time_rest_in_seconds-=1;
                 };
                 showTime();
                 tm=setInterval(showTime,1000);
@@ -74,7 +65,6 @@ window.onload=function(){
         if(pointers[i].hasOwnProperty('innerHTML')) //console.dir(pointers[i]);
             pointers[i].addEventListener('click', function(event) {
                 var element = event.currentTarget;
-                console.dir(event.currentTarget);
                 var timeCell = getTimeCell();
                 if (element.id == 'time_less') timeCell.value--;
                 else if (element.id == 'time_more') timeCell.value++;
