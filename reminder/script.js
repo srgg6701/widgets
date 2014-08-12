@@ -1,14 +1,23 @@
-function getTimeCell() {
-    return document.getElementById('intrvl');
-}
-function syncValues(inpToId) {
-    if(!inpToId) inpToId='range';
-    document.getElementById(inpToId).value = getTimeCell().value;
-}
 window.onload = function () {
+    var controls={
+            range:'range',
+            intrvl:'intrvl',
+            start:'start'
+        },
+        getTimeCell = function(value) {
+            var cell=document.getElementById(controls.intrvl);
+            return (value)? cell.value:cell;
+        },
+        syncValues = function(inpToId) {
+            if(!inpToId) inpToId='range';
+            document.getElementById(inpToId).value = getTimeCell(true);
+        },
+        pointers = document.querySelectorAll('#time_less, #time_more'),
+        timeCell = getTimeCell();
+
     syncValues();
-    var controls={range:'range',intrvl:'intrvl',start:'start'},
-        tm,
+
+    var tm,
     callReminder = (function () {
         var manageControls = function (freeze) {
                 for(var opt in controls)
@@ -20,7 +29,7 @@ window.onload = function () {
                 clearTimeout(tm); //console.log('21: clear interval');
                 manageControls(); // разморозить элементы управления
             } else {
-                var min = document.getElementById(controls.intrvl).value;
+                var min = getTimeCell(true);
                 manageControls(true); // зaморозить элементы управления
                 var time_rest_in_seconds_init = min * 60,
                     time_rest_in_seconds = time_rest_in_seconds_init,    // инициализация значения, далее будет уменьшаться
@@ -60,8 +69,15 @@ window.onload = function () {
         };
     }());
 
-    var pointers = document.querySelectorAll('#time_less, #time_more'),
-        timeCell = document.getElementById(controls.intrvl);
+    document.getElementById('stop').onclick = function () {
+        callReminder(true);
+    };
+    document.getElementById('intrvl').onfocus = function () {
+        callReminder(true);
+    };
+    document.getElementById('range').onfocus = function () {
+        callReminder(true);
+    };
 
     timeCell.onblur = function(){
         timeCell.value=timeCell.value.replace(',','.');
@@ -80,14 +96,11 @@ window.onload = function () {
             }
         }
     };
-    document.getElementById('stop').onclick = function (event) {
-        callReminder(true);
+    document.getElementById('intrvl').oninput = function () {
+        syncValues('intrvl');
     };
-    document.getElementById('intrvl').onfocus = function () {
-        callReminder(true);
-    };
-    document.getElementById('range').onfocus = function () {
-        callReminder(true);
+    document.getElementById('range').oninput = function () {
+        syncValues();
     };
     for (var i in pointers) {
         if (pointers[i].hasOwnProperty('innerHTML')) //console.dir(pointers[i]);
@@ -116,11 +129,10 @@ window.onload = function () {
 
     function clear() {
         callReminder(true);
-        getTimeCell().value = '0';
+        getTimeCell(true).value = '0';
         initTimeGoneBox();
         syncValues();
     }
-
     function getTimeGoneBox() {
         return document.getElementById('tmrest');
     }
