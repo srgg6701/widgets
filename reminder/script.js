@@ -17,7 +17,7 @@ window.onload = function () {
             innerBar = document.querySelector('#rest-bar >div');
         return function (command) {
             if (command === true) {
-                clearTimeout(tm);
+                clearTimeout(tm); //console.log('21: clear interval');
                 manageControls(); // разморозить элементы управления
             } else {
                 var min = document.getElementById(controls.intrvl).value;
@@ -25,10 +25,12 @@ window.onload = function () {
                 var time_rest_in_seconds_init = min * 60,
                     time_rest_in_seconds = time_rest_in_seconds_init,    // инициализация значения, далее будет уменьшаться
                     timeRestBox = getTimeGoneBox(),
-                    timeRestInfo;
+                    timeRestInfo,
+                    time_record;
                 var showTime = function () {
                     // скорректировать ширину прогресс-бара
                     innerBar.style.width = (time_rest_in_seconds / time_rest_in_seconds_init * 100) + '%';
+                    //console.log('showTime, time_rest_in_seconds: '+time_rest_in_seconds+', time_rest_in_seconds_init: '+time_rest_in_seconds_init);
                     // если не меньше минуты, покажем их
                     if (time_rest_in_seconds >= 60) {
                         timeRestInfo = Math.floor(time_rest_in_seconds / 60) + ' мин. ' + (time_rest_in_seconds % 60);
@@ -36,15 +38,17 @@ window.onload = function () {
                         timeRestInfo = time_rest_in_seconds;
                     }
                     timeRestInfo += ' сек.';
-                    // отобразить запись остатка времени
+                    if(time_rest_in_seconds == time_rest_in_seconds_init)
+                        time_record = timeRestInfo;
+                            // отобразить запись остатка времени
                     timeRestBox.innerHTML = timeRestInfo;
                     //console.log('timeRestInfo: '+timeRestInfo+', rest: '+(time_rest_in_seconds/time_rest_in_seconds_init*100)+'%, seconds: '+time_rest_in_seconds);
                     if (time_rest_in_seconds == 0) {
                         var ntm = new Date(),
                             reminder_history = document.getElementById('stats'),
                             content = reminder_history.innerHTML;
-                        reminder_history.innerHTML = '<div>' + ntm.toLocaleString() + '</div>' + content;
-                        clearInterval(tm);
+                        reminder_history.innerHTML = '<div>' + ntm.toLocaleString() + ', ' + time_record + '</div>' + content;
+                        clearInterval(tm); //console.log('51: clear interval');
                         if (confirm("Продолжить?")) callReminder();
                         else manageControls();
                     }
@@ -59,12 +63,20 @@ window.onload = function () {
     var pointers = document.querySelectorAll('#time_less, #time_more'),
         timeCell = document.getElementById(controls.intrvl);
 
+    timeCell.onblur = function(){
+        timeCell.value=timeCell.value.replace(',','.');
+        timeCell.value=timeCell.value.replace(/\s/g,'');
+    };
     document.getElementById('start').onclick = function (event) {
-        if(timeCell.value=='0'){
+        if(!timeCell.value||timeCell.value=='0'){
             alert('Укажите интервал');
         }else{
-            callReminder();
-            event.currentTarget.disabled = true;
+            if(/[^0-9\.]/.test(timeCell.value)){
+                alert('Недопустимые символы в поле для интервала');
+            }else{
+                callReminder();
+                event.currentTarget.disabled = true;
+            }
         }
     };
     document.getElementById('stop').onclick = function (event) {
