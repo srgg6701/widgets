@@ -14,11 +14,14 @@ window.onload = function () {
         // синхронизировать значение интервала между ячейкой и ползунком
         syncValues = function(inpToId) {
             if(!inpToId) inpToId='range';
-            document.getElementById(inpToId).value = getTimeCell(true);
+            if(inpToId==='range')
+                getTimeCell().value=document.getElementById(inpToId).value;
+            else
+                document.getElementById('range').value = getTimeCell(true);
         },
         timeCell = getTimeCell();
     // синхронизировать значение интервала между ячейкой и ползунком
-    syncValues();
+    syncValues('intrvl');
     // инициализировать значение интервала нулём
     initTimeGoneBox();
     var tm,
@@ -90,7 +93,7 @@ window.onload = function () {
                 callback(true);
             };
         var pointers = document.querySelectorAll('#time_less, #time_more');
-        // изменить значение интервала
+        // изменить значение интервала кликом по указателю
         for (var i in pointers) {
             if (pointers[i].hasOwnProperty('innerHTML')) //console.dir(pointers[i]);
                 pointers[i].addEventListener('click', function (event) {
@@ -102,7 +105,7 @@ window.onload = function () {
                     if (element.id == 'time_more'){
                         if(!timeCell.disabled) timeCell.value++;
                     }
-                    syncValues();
+                    syncValues('intrvl');
                 });
         }
     }(callReminder));
@@ -153,9 +156,9 @@ window.onload = function () {
     // остановить и очистить всё
     function clear() {
         callReminder(true);
-        getTimeCell(true).value = '0';
+        getTimeCell().value = '0';
         initTimeGoneBox();
-        syncValues();
+        syncValues('intrvl');
     }
     // получить элемент для отображения остатка времени
     function getTimeGoneBox() {
