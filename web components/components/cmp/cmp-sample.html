@@ -1,0 +1,30 @@
+<polymer-element name="cmp-sample">
+<template>
+    <style>
+        :host {
+            display: block;
+            width: 100%;
+        }
+        span.info{
+            background-color: lightgoldenrodyellow;
+        }
+    </style>
+    <div>Content of the polymer element: <span class="info" id="cotent-placeholder">{{content}}</span></div>
+    <p>Let's change that content!</p>
+    Input a new content: <input type="text" id="new-content"/>
+    <a href="javascript:void(0)" id="content-changer">change it!</a>
+</template>
+<script>
+    /* Обязательно должен быть объявлен Polymer, иначе ничего не отобразится!   */
+    Polymer('cmp-sample', {
+        ready: function(){
+            var component = this;
+            component.content = " here I am.";
+            component.$['content-changer'].onclick=function(){
+                console.log('Changed?');
+                component.content=component.$['new-content'].value;
+            };
+        }
+    });
+</script>
+</polymer-element>

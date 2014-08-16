@@ -1,19 +1,20 @@
 <polymer-element name="data-sample">
-<template>
-    <style>
-        :host {
-            display: block;
-            width: 100%;
-        }
+    <template>
+        <style>
+            :host {
+                display: block;
+                width: 100%;
+            }
 
-    </style>
-    <h3>Hello, samples come here!</h3>
-</template>
-<script>
-    Polymer('data-sample', {
-        ready: function(){
-            console.log('Data sample is ready!');
-        }
-    });
-</script>
+        </style>
+        <h3>Hello, samples come here!</h3>
+    </template>
+    <script>
+        /* Обязательно должен быть объявлен Polymer, иначе ничего не отобразится!   */
+        Polymer('data-sample', {
+            ready: function(){
+                console.log('Data sample is ready!');
+            }
+        });
+    </script>
 </polymer-element>
