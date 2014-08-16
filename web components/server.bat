@@ -1,1 +1,1 @@
-node ../web_server/server.js
+nodemon ../web_server/server.js

@@ -1,11 +1,19 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
-<polimer-component name="data-sample">
-<template></template>
+<polymer-element name="data-sample">
+<template>
+    <style>
+        :host {
+            display: block;
+            width: 100%;
+        }
+
+    </style>
+    <h3>Hello, samples come here!</h3>
+</template>
 <script>
-    Polymer('data-sample',{
-        ready:function(){
+    Polymer('data-sample', {
+        ready: function(){
             console.log('Data sample is ready!');
         }
     });
 </script>
-</polimer-component>
+</polymer-element>
