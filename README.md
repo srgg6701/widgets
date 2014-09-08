@@ -1,4 +1,4 @@
 widgets
 =======
 
-widgets, widgets! HTML5, js, css, Web components. Nice! :)
+widgets, widgets! HTML5, js, css, Web components, APIs. Nice! :)
