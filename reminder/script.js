@@ -4,14 +4,14 @@ function syncValues(inpToId,inpFrom){
 }
 window.onload=function(){	
 	syncValues('range');
-	var makeDecition = (function (){
+	var makeDecision = (function (){
 		var tm, 
 			stp=false,
 			gotm = false,
 			sttm = function(cancel){
 				if(cancel) console.log('%ccancel: '+cancel,'color:violet');
 				var min=document.getElementById('intrvl').value;	
-				tm=setTimeout(makeDecition,min*60*1000);
+				tm=setTimeout(makeDecision,min*60*1000);
 				//console.log('tm: '+tm+', min: '+min);
 			};			
 		return function(command){
@@ -40,12 +40,12 @@ window.onload=function(){
 		};
 	}());
 	document.getElementById('start').onclick=function(event){
-		makeDecition();
+		makeDecision();
 		event.currentTarget.disabled=true;
 	};
 	document.getElementById('stop').onclick=function(event){		
-		makeDecition(true);
+		makeDecision(true);
 	};
-	document.getElementById('intrvl').onfocus=function(){makeDecition(true);};
-	document.getElementById('range').onfocus=function(){makeDecition(true);};
+	document.getElementById('intrvl').onfocus=function(){makeDecision(true);};
+	document.getElementById('range').onfocus=function(){makeDecision(true);};
 };
