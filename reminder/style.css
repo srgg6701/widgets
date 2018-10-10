@@ -16,7 +16,7 @@ button:nth-child(2){
 }
 h3{
     display: table;
-    background: url(images/clock.png) no-repeat 0 3px;
+    background: url(favicon.png) no-repeat 0 3px;
     background-size: 40px;
     height: 46px;
     line-height: 46px;
@@ -30,10 +30,9 @@ h3{
 	clear:left;
 }
 #clear-time-trash{
-    bottom: -35px;
     float: right;
-    position: absolute;
-    right: 4px;
+    height: 32px;
+    margin-left: 35px;
 }
 #controls{
 	padding:10px;
