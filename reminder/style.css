@@ -26,6 +26,7 @@ h3{
 }
 /*  ids    */
 #audio-box{
+    clear: both;
 	float: left;
 	height: 0;
 	margin-top: 10px;

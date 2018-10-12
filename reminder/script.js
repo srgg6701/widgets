@@ -75,12 +75,11 @@ window.onload = function () {
                             audioBox.play();
                             if (confirm("Продолжить?")) {
                                 callReminder();
-                                audioBox.pause();
                             } else {
                                 manageControls();
-                                audioBox.pause();
                             }
-                            audioBox.classList.remove('active');
+                            audioBox.pause();
+                            audioBox.parentNode.classList.remove('active');
                         }
                         time_rest_in_seconds -= 1;
                     };
