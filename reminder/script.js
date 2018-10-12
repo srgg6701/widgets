@@ -1,4 +1,5 @@
 window.onload = function () {
+    const audioBox = document.querySelector('#audio-box audio');
     var controls = function () {
         return {
             range: 'range',    // ползунок
@@ -47,18 +48,16 @@ window.onload = function () {
                         time_rest_in_seconds = time_rest_in_seconds_init,    // инициализация значения, далее будет уменьшаться
                         timeRestBox = getTimeGoneBox(),
                         timeRestInfo,
-                        time_record;
-                    // рассчитать и отобразить оставшееся время (запускается через интервал)
-                    var showTime = function () {
+                        time_record,
+                        // рассчитать и отобразить оставшееся время (запускается через интервал)
+                        showTime = function () {
                         // динамически установить ширину прогресс-бара
                         timeRestProgressBar.style.width = (time_rest_in_seconds / time_rest_in_seconds_init * 100) + '%';
                         //console.log('showTime, time_rest_in_seconds: '+time_rest_in_seconds+', time_rest_in_seconds_init: '+time_rest_in_seconds_init);
                         // если не меньше минуты, покажем их
-                        if (time_rest_in_seconds >= 60) {
-                            timeRestInfo = Math.floor(time_rest_in_seconds / 60) + ' мин. ' + (time_rest_in_seconds % 60);
-                        } else {
-                            timeRestInfo = time_rest_in_seconds;
-                        }
+                        timeRestInfo = (time_rest_in_seconds >= 60)
+                            ? Math.floor(time_rest_in_seconds / 60) + ' мин. ' + (time_rest_in_seconds % 60)
+                            : time_rest_in_seconds;
                         timeRestInfo += ' сек.';
                         if (time_rest_in_seconds == time_rest_in_seconds_init)
                             time_record = timeRestInfo;
@@ -71,8 +70,17 @@ window.onload = function () {
                                 content = reminder_history.innerHTML;
                             reminder_history.innerHTML = '<div>' + ntm.toLocaleString() + ', ' + time_record + '</div>' + content;
                             clearInterval(tm); //console.log('51: clear interval');
-                            if (confirm("Продолжить?")) callReminder();
-                            else manageControls();
+                            
+                            audioBox.parentNode.classList.add('active');
+                            audioBox.play();
+                            if (confirm("Продолжить?")) {
+                                callReminder();
+                                audioBox.pause();
+                            } else {
+                                manageControls();
+                                audioBox.pause();
+                            }
+                            audioBox.classList.remove('active');
                         }
                         time_rest_in_seconds -= 1;
                     };

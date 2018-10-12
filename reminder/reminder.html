@@ -1,34 +1,44 @@
 <!doctype html>
 <html>
+
 <head>
-<meta charset="utf-8">
-<title>Reminder</title>
-<link href="style.css" rel="stylesheet" />
+    <meta charset="utf-8">
+    <title>Reminder</title>
+    <link href="style.css" rel="stylesheet" />
 </head>
+
 <body>
-<h3>Укажите интервал:</h3>
-<div id="rnd">
-    <div id="controls">
-        <input type="range" id="range" min="1" max="480" />
-        <span id="time_less">◄</span>
-        <input type="text" id="interval" value="7" />
-        <span id="time_more">►</span>
-        минут
-    </div>
-    <div id="rest_box">
-        <div>Осталось:</div>
-        <div id="tmrest"></div>
-        <div id="rest-bar">
-            <div>&nbsp;</div>
+    <h3>Укажите интервал:</h3>
+    <div id="rnd">
+        <div id="controls">
+            <input type="range" id="range" min="1" max="480" />
+            <div id="controls-handlers">
+                <div id="controls-handlers-arrows">
+                    <span id="time_less">◄</span>
+                    <input type="text" id="interval" value="7" />
+                    <span id="time_more">►</span>
+                </div>
+                <div>минут</div>
+            </div>     
+        </div>
+        <div id="rest_box">
+            <div>Осталось:</div>
+            <div id="tmrest"></div>
+            <div id="rest-bar">
+                <div>&nbsp;</div>
+            </div>
         </div>
     </div>
-</div>
-<div id="buttons">
-    <img id="clear-time-trash" src="images/trash.png" title="Очистить интервал"/>
-    <button id="start">Старт</button>
-    <button id="stop">Стоп</button>
-</div>
-<div id="stats"></div>
-<script src="script.js"></script>
+    <div id="buttons">
+        <img id="clear-time-trash" src="images/trash.png" title="Очистить интервал" />
+        <button id="start">Старт</button>
+        <button id="stop">Стоп</button>
+    </div>
+    <div id="audio-box">
+        <audio controls="true" preload="auto" loop="true" src="reminder.wav"></audio>
+    </div>
+    <div id="stats"></div>
+    <script src="script.js"></script>
 </body>
+
 </html>

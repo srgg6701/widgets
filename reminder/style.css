@@ -25,6 +25,18 @@ h3{
     padding-left: 52px;
 }
 /*  ids    */
+#audio-box{
+	float: left;
+	height: 0;
+	margin-top: 10px;
+	opacity: 0;
+	transition: all ease 0.4s;
+}
+#audio-box.active{
+	height:54px;
+	opacity:1;
+}
+
 #buttons{
 	float:left;
 	clear:left;
@@ -36,10 +48,16 @@ h3{
 }
 #controls{
 	padding:10px;
-	display: table;
+	display: flex;
 	background-color: rgb(255, 201, 0);
 	border-radius: 8px;
 	box-shadow: 0 -12px 20px orange inset;
+}
+#controls-handlers{
+	display:flex;
+}
+#controls-handlers-arrows{
+	display:flex;
 }
 #interval{
 	border-radius: 4px;
@@ -52,7 +70,8 @@ h3{
 #range{
 	float:left;
 	margin: 7px 10px 7px auto;
-	width: 202px;
+	/* max-width: 100%; */
+	width: 100%;
 }
 #rest-bar{
     border-top-right-radius: 6px;
@@ -69,16 +88,24 @@ h3{
 }
 #rest_box{
     box-sizing: border-box;
-    display: table;
+    display: flex;
     padding: 10px;
     padding-right: 0;
     width: 100%;
 }
 #rest_box >div{
     box-sizing: border-box;
-    display: table-cell;
     line-height: 26px;
 }
+
+#rest_box >div:nth-child(1){
+    width: 40%;
+}
+#rest_box >div:nth-child(2){}
+#rest_box >div:nth-child(3){
+    width: 50%;
+}
+
 #rnd{
     display: table;
     position: relative;
